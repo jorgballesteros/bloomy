@@ -210,7 +210,25 @@ app.layout = dbc.Container([
             html.Div([
                 html.Span("POSITIONS", style={'color': COLORS['gold'], 'font-size': '12px', 'font-weight': '600', 'font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', 'letter-spacing': '0.5px'})
             ], style={'margin-bottom': '12px'}),
-            html.Div(id='positions-panel')
+            html.Div(id='positions-panel'),
+            
+            # Gráfico comparativo de posiciones
+            html.Div([
+                html.Div([
+                    html.Span("PERFORMANCE", style={'color': COLORS['gold'], 'font-size': '11px', 'font-weight': '600', 'letter-spacing': '0.5px'})
+                ], style={'margin-bottom': '8px'}),
+                
+                # Botones de período
+                dbc.ButtonGroup([
+                    dbc.Button("1M", id='period-1m', size='sm', style={'background-color': COLORS['bg_card'], 'color': COLORS['text_primary'], 'border': f"1px solid {COLORS['border']}", 'font-size': '9px', 'padding': '4px 8px'}),
+                    dbc.Button("3M", id='period-3m', size='sm', style={'background-color': COLORS['bg_secondary'], 'color': COLORS['gold'], 'border': f"1px solid {COLORS['gold']}", 'font-size': '9px', 'padding': '4px 8px'}),
+                    dbc.Button("6M", id='period-6m', size='sm', style={'background-color': COLORS['bg_card'], 'color': COLORS['text_primary'], 'border': f"1px solid {COLORS['border']}", 'font-size': '9px', 'padding': '4px 8px'}),
+                    dbc.Button("YTD", id='period-ytd', size='sm', style={'background-color': COLORS['bg_card'], 'color': COLORS['text_primary'], 'border': f"1px solid {COLORS['border']}", 'font-size': '9px', 'padding': '4px 8px'}),
+                    dbc.Button("1Y", id='period-1y', size='sm', style={'background-color': COLORS['bg_card'], 'color': COLORS['text_primary'], 'border': f"1px solid {COLORS['border']}", 'font-size': '9px', 'padding': '4px 8px'}),
+                ], style={'margin-bottom': '8px', 'width': '100%'}),
+                
+                html.Div(id='performance-chart')
+            ], style={'margin-top': '15px'})
         ], width=3, style={'padding-right': '10px'}),
         
         # Panel central: Gráficos
@@ -284,7 +302,10 @@ app.layout = dbc.Container([
     ]),
     
     # Auto-refresh
-    dcc.Interval(id='interval-component', interval=60*1000, n_intervals=0)
+    dcc.Interval(id='interval-component', interval=60*1000, n_intervals=0),
+    
+    # Store para período seleccionado
+    dcc.Store(id='selected-period', data='3mo')
     
 ], fluid=True, style={
     'background-color': COLORS['bg_primary'], 
@@ -653,6 +674,138 @@ def update_opportunities(n):
 def update_timestamp(n):
     """Actualiza timestamp de última actualización"""
     return f"Last update: {datetime.now().strftime('%H:%M:%S')}"
+
+@app.callback(
+    [Output('selected-period', 'data'),
+     Output('period-1m', 'style'),
+     Output('period-3m', 'style'),
+     Output('period-6m', 'style'),
+     Output('period-ytd', 'style'),
+     Output('period-1y', 'style')],
+    [Input('period-1m', 'n_clicks'),
+     Input('period-3m', 'n_clicks'),
+     Input('period-6m', 'n_clicks'),
+     Input('period-ytd', 'n_clicks'),
+     Input('period-1y', 'n_clicks')],
+    prevent_initial_call=True
+)
+def update_period(m1, m3, m6, ytd, y1):
+    """Actualiza período seleccionado y estilos de botones"""
+    ctx = dash.callback_context
+    if not ctx.triggered:
+        selected = 'period-3m'
+    else:
+        selected = ctx.triggered[0]['prop_id'].split('.')[0]
+    
+    period_map = {
+        'period-1m': '1mo',
+        'period-3m': '3mo',
+        'period-6m': '6mo',
+        'period-ytd': 'ytd',
+        'period-1y': '1y'
+    }
+    
+    # Estilos para botones
+    base_style = {
+        'background-color': COLORS['bg_card'],
+        'color': COLORS['text_primary'],
+        'border': f"1px solid {COLORS['border']}",
+        'font-size': '9px',
+        'padding': '4px 8px'
+    }
+    
+    active_style = {
+        'background-color': COLORS['bg_secondary'],
+        'color': COLORS['gold'],
+        'border': f"1px solid {COLORS['gold']}",
+        'font-size': '9px',
+        'padding': '4px 8px'
+    }
+    
+    styles = {
+        'period-1m': active_style if selected == 'period-1m' else base_style,
+        'period-3m': active_style if selected == 'period-3m' else base_style,
+        'period-6m': active_style if selected == 'period-6m' else base_style,
+        'period-ytd': active_style if selected == 'period-ytd' else base_style,
+        'period-1y': active_style if selected == 'period-1y' else base_style,
+    }
+    
+    return (
+        period_map.get(selected, '3mo'),
+        styles['period-1m'],
+        styles['period-3m'],
+        styles['period-6m'],
+        styles['period-ytd'],
+        styles['period-1y']
+    )
+
+@app.callback(
+    Output('performance-chart', 'children'),
+    [Input('interval-component', 'n_intervals'),
+     Input('selected-period', 'data')]
+)
+def update_performance_chart(n, period):
+    """Genera gráfico comparativo de performance"""
+    fig = go.Figure()
+    
+    colors_map = {
+        'NBIS': COLORS['gold'],
+        'NVDA': '#00D9FF',
+        'OKLO': '#FF6B9D'
+    }
+    
+    for ticker in POSITIONS.keys():
+        df, _ = fetch_stock_data(ticker, period=period)
+        
+        if df.empty:
+            continue
+        
+        # Calcular % change normalizado (día 0 = 0%)
+        first_price = df['Close'].iloc[0]
+        pct_change = ((df['Close'] - first_price) / first_price) * 100
+        
+        fig.add_trace(go.Scatter(
+            x=df.index,
+            y=pct_change,
+            mode='lines',
+            name=ticker,
+            line=dict(color=colors_map.get(ticker, COLORS['text_primary']), width=2),
+            hovertemplate=f'{ticker}: %{{y:.2f}}%<extra></extra>'
+        ))
+    
+    # Línea de referencia 0%
+    fig.add_hline(y=0, line_dash="dot", line_color=COLORS['text_secondary'], line_width=1, opacity=0.5)
+    
+    fig.update_layout(
+        height=200,
+        margin=dict(l=40, r=10, t=10, b=30),
+        paper_bgcolor=COLORS['bg_card'],
+        plot_bgcolor=COLORS['bg_card'],
+        font=dict(color=COLORS['text_primary'], family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', size=9),
+        xaxis=dict(
+            gridcolor=COLORS['border'], 
+            gridwidth=0.5,
+            showgrid=True
+        ),
+        yaxis=dict(
+            gridcolor=COLORS['border'], 
+            gridwidth=0.5,
+            showgrid=True,
+            title=dict(text='% Change', font=dict(size=9))
+        ),
+        showlegend=True,
+        legend=dict(
+            orientation='h',
+            yanchor='bottom',
+            y=1.02,
+            xanchor='right',
+            x=1,
+            font=dict(size=9)
+        ),
+        hovermode='x unified'
+    )
+    
+    return dcc.Graph(figure=fig, config={'displayModeBar': False})
 
 if __name__ == '__main__':
     app.run(debug=False, host='127.0.0.1', port=8050)

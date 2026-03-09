@@ -30,6 +30,15 @@ button:hover {
     transform: scale(1.05);
 }
 
+/* Period buttons */
+.btn-group button {
+    transition: all 0.2s ease;
+}
+
+.btn-group button:hover {
+    border-color: #51C4C8 !important;
+}
+
 /* Smooth transitions */
 * {
     transition: all 0.2s ease;
