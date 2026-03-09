@@ -3,8 +3,10 @@
 
 set -e
 
+cd "$(dirname "$0")/.."
+
 echo "📊 Actualizando posiciones desde CSV..."
-python3 scripts/generate_positions.py
+python3 src/generate_positions.py
 
 echo ""
 echo "🔄 Reiniciando BLOOMY..."

@@ -28,7 +28,7 @@ Archivo CSV con el histórico completo de transacciones del portfolio.
 ### Generar `config/positions.json` desde CSV
 
 ```bash
-python3 scripts/generate_positions.py
+python3 src/generate_positions.py
 ```
 
 El script:
@@ -65,13 +65,13 @@ Nunca se subirán a git para proteger tu información financiera privada.
 1. **Actualiza el CSV** cuando hagas nuevas transacciones
 2. **Regenera positions.json:**
    ```bash
-   python3 scripts/generate_positions.py
+   python3 src/generate_positions.py
    ```
-3. **Reinicia BLOOMY:**
+   O usa el script rápido:
    ```bash
-   launchctl kickstart -k gui/$(id -u)/com.jballesteros.bloomy
+   ./scripts/update_positions.sh
    ```
-4. ✅ Dashboard actualizado con tus posiciones reales
+3. ✅ Dashboard actualizado con tus posiciones reales
 
 ## 📝 Notas
 

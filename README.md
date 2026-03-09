@@ -49,7 +49,7 @@ nano config/opportunities.json
 ### Inicio Manual
 
 ```bash
-./start_dashboard.sh
+./scripts/start_dashboard.sh
 ```
 
 Dashboard disponible en: http://127.0.0.1:8050
@@ -90,10 +90,7 @@ launchctl unload ~/Library/LaunchAgents/com.jballesteros.bloomy.plist
 ```
 bloomy/
 ├── app.py                          # Aplicación principal Dash
-├── analysis.json                   # Análisis del último informe (no en git)
 ├── requirements.txt                # Dependencias Python
-├── start_dashboard.sh              # Script de inicio manual
-├── check_status.sh                 # Verificador de estado
 ├── config/
 │   ├── positions.json              # Tus posiciones (no en git)
 │   ├── opportunities.json          # Tu watchlist (no en git)
@@ -102,7 +99,13 @@ bloomy/
 ├── data/
 │   ├── delta_transactions.csv      # Histórico de transacciones (no en git)
 │   └── README.md                   # Documentación data/
+├── reports/
+│   └── analysis.json               # Análisis del último informe (no en git)
 ├── scripts/
+│   ├── start_dashboard.sh          # Script de inicio manual
+│   ├── check_status.sh             # Verificador de estado
+│   └── update_positions.sh         # Actualiza positions y reinicia
+├── src/
 │   └── generate_positions.py       # Genera positions.json desde CSV
 ├── assets/
 │   └── style.css                   # Estilos personalizados
@@ -128,7 +131,7 @@ bloomy/
 1. Coloca tu CSV de transacciones en `data/delta_transactions.csv`
 2. Ejecuta el script generador:
    ```bash
-   python3 scripts/generate_positions.py
+   python3 src/generate_positions.py
    ```
 3. Se genera automáticamente `config/positions.json` con el cost basis real
 
@@ -161,7 +164,7 @@ Editar `config/opportunities.json`:
 
 ### Actualizar Análisis
 
-Editar `analysis.json`:
+Editar `reports/analysis.json`:
 
 ```json
 {
@@ -174,7 +177,7 @@ Editar `analysis.json`:
 }
 ```
 
-**Nota:** Los archivos `config/positions.json`, `config/opportunities.json` y `analysis.json` están en `.gitignore` y no se subirán a git (datos privados).
+**Nota:** Los archivos `config/positions.json`, `config/opportunities.json` y `reports/analysis.json` están en `.gitignore` y no se subirán a git (datos privados).
 
 ## 📊 Indicadores Técnicos
 

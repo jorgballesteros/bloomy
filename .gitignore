@@ -27,7 +27,7 @@ ENV/
 Thumbs.db
 
 # Personal data (not committed)
-analysis.json
+reports/analysis.json
 config/positions.json
 config/opportunities.json
 data/*.csv

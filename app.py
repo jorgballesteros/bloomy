@@ -86,7 +86,7 @@ HEADER_STYLE = {
 def load_analysis():
     """Carga el análisis del último informe"""
     try:
-        analysis_path = os.path.join(os.path.dirname(__file__), 'analysis.json')
+        analysis_path = os.path.join(os.path.dirname(__file__), 'reports', 'analysis.json')
         with open(analysis_path, 'r', encoding='utf-8') as f:
             return json.load(f)
     except Exception as e:
