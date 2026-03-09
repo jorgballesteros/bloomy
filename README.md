@@ -99,6 +99,11 @@ bloomy/
 │   ├── opportunities.json          # Tu watchlist (no en git)
 │   ├── positions.example.json      # Template posiciones
 │   └── opportunities.example.json  # Template watchlist
+├── data/
+│   ├── delta_transactions.csv      # Histórico de transacciones (no en git)
+│   └── README.md                   # Documentación data/
+├── scripts/
+│   └── generate_positions.py       # Genera positions.json desde CSV
 ├── assets/
 │   └── style.css                   # Estilos personalizados
 └── README.md                       # Este archivo
@@ -117,6 +122,17 @@ bloomy/
 ## 📝 Configuración
 
 ### Personalizar Posiciones
+
+**Opción 1: Generar desde CSV de transacciones (Recomendado)**
+
+1. Coloca tu CSV de transacciones en `data/delta_transactions.csv`
+2. Ejecuta el script generador:
+   ```bash
+   python3 scripts/generate_positions.py
+   ```
+3. Se genera automáticamente `config/positions.json` con el cost basis real
+
+**Opción 2: Editar manualmente**
 
 Editar `config/positions.json`:
 

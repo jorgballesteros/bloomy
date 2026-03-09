@@ -30,6 +30,7 @@ Thumbs.db
 analysis.json
 config/positions.json
 config/opportunities.json
+data/*.csv
 
 # Keep example configs in git
 !config/*.example.json
