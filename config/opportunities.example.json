@@ -1,0 +1,22 @@
+[
+  {
+    "ticker": "TSLA",
+    "name": "Tesla Inc",
+    "sector": "Automotive/Energy"
+  },
+  {
+    "ticker": "AMD",
+    "name": "Advanced Micro Devices",
+    "sector": "Semiconductors"
+  },
+  {
+    "ticker": "NVDA",
+    "name": "NVIDIA Corporation",
+    "sector": "Semiconductors"
+  },
+  {
+    "ticker": "AMZN",
+    "name": "Amazon.com Inc",
+    "sector": "E-commerce/Cloud"
+  }
+]

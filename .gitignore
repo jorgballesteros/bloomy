@@ -26,5 +26,10 @@ ENV/
 .DS_Store
 Thumbs.db
 
-# Local config
-config.local.json
+# Personal data (not committed)
+analysis.json
+config/positions.json
+config/opportunities.json
+
+# Keep example configs in git
+!config/*.example.json

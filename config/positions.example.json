@@ -1,0 +1,14 @@
+{
+  "AAPL": {
+    "shares": 100,
+    "cost_basis": 150.00
+  },
+  "MSFT": {
+    "shares": 50,
+    "cost_basis": 300.00
+  },
+  "GOOGL": {
+    "shares": 25,
+    "cost_basis": 120.00
+  }
+}

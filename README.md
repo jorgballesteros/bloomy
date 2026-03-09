@@ -34,6 +34,14 @@ source venv/bin/activate  # En Windows: venv\Scripts\activate
 
 # Instalar dependencias
 pip install -r requirements.txt
+
+# Configurar posiciones y watchlist
+cp config/positions.example.json config/positions.json
+cp config/opportunities.example.json config/opportunities.json
+
+# Editar con tus datos
+nano config/positions.json
+nano config/opportunities.json
 ```
 
 ## 🏃 Uso
@@ -81,14 +89,19 @@ launchctl unload ~/Library/LaunchAgents/com.jballesteros.bloomy.plist
 
 ```
 bloomy/
-├── app.py                 # Aplicación principal Dash
-├── analysis.json          # Análisis del último informe
-├── requirements.txt       # Dependencias Python
-├── start_dashboard.sh     # Script de inicio manual
-├── check_status.sh        # Verificador de estado
+├── app.py                          # Aplicación principal Dash
+├── analysis.json                   # Análisis del último informe (no en git)
+├── requirements.txt                # Dependencias Python
+├── start_dashboard.sh              # Script de inicio manual
+├── check_status.sh                 # Verificador de estado
+├── config/
+│   ├── positions.json              # Tus posiciones (no en git)
+│   ├── opportunities.json          # Tu watchlist (no en git)
+│   ├── positions.example.json      # Template posiciones
+│   └── opportunities.example.json  # Template watchlist
 ├── assets/
-│   └── style.css         # Estilos personalizados
-└── README.md             # Este archivo
+│   └── style.css                   # Estilos personalizados
+└── README.md                       # Este archivo
 ```
 
 ## 🎨 Paleta de Colores
@@ -105,21 +118,28 @@ bloomy/
 
 ### Personalizar Posiciones
 
-Editar `POSITIONS` en `app.py`:
+Editar `config/positions.json`:
 
-```python
-POSITIONS = {
-    'TICKER': {'shares': 100, 'cost_basis': 50.00}
+```json
+{
+  "TICKER": {
+    "shares": 100,
+    "cost_basis": 50.00
+  }
 }
 ```
 
 ### Actualizar Watchlist
 
-Editar `OPPORTUNITIES` en `app.py`:
+Editar `config/opportunities.json`:
 
-```python
-OPPORTUNITIES = [
-    {'ticker': 'TICKER', 'name': 'Company Name', 'sector': 'Sector'}
+```json
+[
+  {
+    "ticker": "TICKER",
+    "name": "Company Name",
+    "sector": "Sector"
+  }
 ]
 ```
 
@@ -137,6 +157,8 @@ Editar `analysis.json`:
   }
 }
 ```
+
+**Nota:** Los archivos `config/positions.json`, `config/opportunities.json` y `analysis.json` están en `.gitignore` y no se subirán a git (datos privados).
 
 ## 📊 Indicadores Técnicos
 

@@ -16,22 +16,32 @@ import dash_bootstrap_components as dbc
 import json
 import os
 
-# Configuración
-POSITIONS = {
-    'NBIS': {'shares': 150, 'cost_basis': 34.61},
-    'NVDA': {'shares': 39, 'cost_basis': 121.75},
-    'OKLO': {'shares': 50, 'cost_basis': 81.42}
-}
+# Configuración cargada desde archivos JSON
+def load_config():
+    """Carga configuración desde archivos JSON"""
+    config_dir = os.path.join(os.path.dirname(__file__), 'config')
+    
+    # Cargar posiciones
+    positions_path = os.path.join(config_dir, 'positions.json')
+    try:
+        with open(positions_path, 'r', encoding='utf-8') as f:
+            positions = json.load(f)
+    except Exception as e:
+        print(f"Error loading positions: {e}")
+        positions = {}
+    
+    # Cargar oportunidades
+    opportunities_path = os.path.join(config_dir, 'opportunities.json')
+    try:
+        with open(opportunities_path, 'r', encoding='utf-8') as f:
+            opportunities = json.load(f)
+    except Exception as e:
+        print(f"Error loading opportunities: {e}")
+        opportunities = []
+    
+    return positions, opportunities
 
-OPPORTUNITIES = [
-    {'ticker': 'BEP', 'name': 'Brookfield Renewable', 'sector': 'Renovables'},
-    {'ticker': 'AMD', 'name': 'Advanced Micro Devices', 'sector': 'Semiconductores'},
-    {'ticker': 'PLTR', 'name': 'Palantir Technologies', 'sector': 'IA/Software'},
-    {'ticker': 'SMR', 'name': 'NuScale Power', 'sector': 'Nuclear'},
-    {'ticker': 'IONQ', 'name': 'IonQ Inc', 'sector': 'Quantum'},
-    {'ticker': 'RKLB', 'name': 'Rocket Lab USA', 'sector': 'Aeroespacial'},
-    {'ticker': 'VST', 'name': 'Vistra Corp', 'sector': 'Energía'}
-]
+POSITIONS, OPPORTUNITIES = load_config()
 
 # Paleta Custom
 COLORS = {
