@@ -578,7 +578,7 @@ def update_chart(ticker, n):
 )
 def update_opportunities(n, page):
     """Actualiza panel de oportunidades"""
-    items_per_page = 4
+    items_per_page = 6  # Mostrar 6 items (3 filas x 2 columnas)
     start_idx = page * items_per_page
     end_idx = start_idx + items_per_page
     page_opps = OPPORTUNITIES[start_idx:end_idx]
@@ -612,43 +612,60 @@ def update_opportunities(n, page):
             html.A(
                 html.Div([
                     html.Div([
-                        html.Span(f"{ticker}", style={'color': COLORS['text_primary'], 'font-size': '12px', 'font-weight': '600'}),
+                        html.Span(f"{ticker}", style={'color': COLORS['text_primary'], 'font-size': '11px', 'font-weight': '600'}),
                         html.Span(f" {change_1d:+.2f}%", style={
                             'color': change_color, 
-                            'font-size': '10px',
+                            'font-size': '9px',
                             'background-color': change_bg,
-                            'padding': '2px 5px',
-                            'border-radius': '3px',
-                            'margin-left': '6px',
+                            'padding': '1px 4px',
+                            'border-radius': '2px',
+                            'margin-left': '4px',
                             'font-weight': '500'
                         })
-                    ], style={'display': 'flex', 'align-items': 'center', 'margin-bottom': '2px'}),
-                    html.Div(opp['sector'], style={'font-size': '9px', 'color': COLORS['text_secondary'], 'margin': '0 0 6px 0'}),
-                    html.Div(f"${current_price:.2f}", style={'font-size': '15px', 'color': COLORS['text_primary'], 'margin': '4px 0', 'font-weight': '600'}),
-                    html.Div(f"Cap: {market_cap_str}", style={'font-size': '9px', 'color': COLORS['text_secondary'], 'margin': '4px 0'}),
+                    ], style={'display': 'flex', 'align-items': 'center', 'justify-content': 'space-between', 'margin-bottom': '2px'}),
+                    html.Div(opp['sector'], style={'font-size': '8px', 'color': COLORS['text_secondary'], 'margin': '0 0 4px 0'}),
+                    html.Div(f"${current_price:.2f}", style={'font-size': '13px', 'color': COLORS['text_primary'], 'margin': '2px 0', 'font-weight': '600'}),
                     html.Div([
-                        html.Div([
-                            html.Span("RSI: ", style={'color': COLORS['text_secondary'], 'font-size': '9px'}),
-                            html.Span(f"{rsi:.0f}" if rsi else "N/A", style={'color': COLORS['gold'], 'font-size': '9px', 'font-weight': '600'})
-                        ]),
-                        html.Div([
-                            html.Span(trend, style={'color': COLORS['text_primary'], 'font-size': '9px'})
-                        ], style={'margin': '2px 0'}),
-                        html.Div([
-                            html.Span("From 52W High: ", style={'color': COLORS['text_secondary'], 'font-size': '9px'}),
-                            html.Span(f"{dist_from_high:+.1f}%", style={'color': change_color, 'font-size': '9px', 'font-weight': '600'})
-                        ])
-                    ], style={'margin-top': '6px'})
+                        html.Span("RSI ", style={'color': COLORS['text_secondary'], 'font-size': '8px'}),
+                        html.Span(f"{rsi:.0f}" if rsi else "N/A", style={'color': COLORS['gold'], 'font-size': '8px', 'font-weight': '600'}),
+                        html.Span(" • ", style={'color': COLORS['text_secondary'], 'font-size': '8px', 'margin': '0 2px'}),
+                        html.Span(trend, style={'color': COLORS['text_primary'], 'font-size': '8px'})
+                    ], style={'margin': '4px 0 0 0'})
                 ]),
                 href=f"https://finance.yahoo.com/quote/{ticker}",
                 target="_blank",
                 style={'text-decoration': 'none'}
             )
-        ], style=CARD_STYLE, className='opportunity-card')
+        ], style={
+            'background-color': COLORS['bg_card'],
+            'border': f"1px solid {COLORS['border']}",
+            'border-radius': '6px',
+            'padding': '8px',
+            'transition': 'all 0.2s ease',
+            'cursor': 'pointer',
+            'height': '100%'
+        }, className='opportunity-card')
         
         cards.append(card)
     
-    return cards
+    # Organizar cards en grid 2 columnas
+    rows = []
+    for i in range(0, len(cards), 2):
+        row_cards = cards[i:i+2]
+        if len(row_cards) == 1:
+            # Solo una tarjeta en la última fila
+            row = dbc.Row([
+                dbc.Col(row_cards[0], width=6),
+            ], style={'margin-bottom': '6px'})
+        else:
+            # Dos tarjetas
+            row = dbc.Row([
+                dbc.Col(row_cards[0], width=6),
+                dbc.Col(row_cards[1], width=6),
+            ], style={'margin-bottom': '6px'})
+        rows.append(row)
+    
+    return rows
 
 @app.callback(
     Output('opp-page', 'data'),
@@ -664,7 +681,7 @@ def change_page(prev_clicks, next_clicks, current_page):
         return current_page
     
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    items_per_page = 4
+    items_per_page = 6  # Debe coincidir con update_opportunities
     total_pages = (len(OPPORTUNITIES) + items_per_page - 1) // items_per_page
     
     if button_id == 'opp-next':
