@@ -1,8 +1,18 @@
 [
   {
+    "ticker": "AAPL",
+    "name": "Apple Inc",
+    "sector": "Technology"
+  },
+  {
+    "ticker": "MSFT",
+    "name": "Microsoft Corporation",
+    "sector": "Technology"
+  },
+  {
     "ticker": "TSLA",
     "name": "Tesla Inc",
-    "sector": "Automotive/Energy"
+    "sector": "Automotive"
   },
   {
     "ticker": "AMD",
@@ -18,5 +28,25 @@
     "ticker": "AMZN",
     "name": "Amazon.com Inc",
     "sector": "E-commerce/Cloud"
+  },
+  {
+    "ticker": "GOOGL",
+    "name": "Alphabet Inc",
+    "sector": "Technology"
+  },
+  {
+    "ticker": "META",
+    "name": "Meta Platforms",
+    "sector": "Social Media"
+  },
+  {
+    "ticker": "NFLX",
+    "name": "Netflix Inc",
+    "sector": "Streaming"
+  },
+  {
+    "ticker": "DIS",
+    "name": "Walt Disney Co",
+    "sector": "Entertainment"
   }
 ]

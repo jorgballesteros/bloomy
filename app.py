@@ -279,29 +279,12 @@ app.layout = dbc.Container([
             html.Div([
                 html.Span("WATCHLIST", style={'color': COLORS['gold'], 'font-size': '12px', 'font-weight': '600', 'font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', 'letter-spacing': '0.5px'})
             ], style={'margin-bottom': '12px'}),
-            html.Div(id='opportunities-panel'),
-            dbc.ButtonGroup([
-                dbc.Button("◀", id='opp-prev', size='sm', style={
-                    'background-color': COLORS['bg_card'], 
-                    'color': COLORS['text_primary'], 
-                    'border': f"1px solid {COLORS['border']}", 
-                    'font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-                }),
-                dbc.Button("▶", id='opp-next', size='sm', style={
-                    'background-color': COLORS['bg_card'], 
-                    'color': COLORS['text_primary'], 
-                    'border': f"1px solid {COLORS['border']}", 
-                    'font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-                })
-            ], style={'margin-top': '12px', 'display': 'flex', 'align-items': 'center'})
+            html.Div(id='opportunities-panel', style={'max-height': '800px', 'overflow-y': 'auto'})
         ], width=3, style={'padding-left': '10px'})
     ]),
     
     # Auto-refresh
-    dcc.Interval(id='interval-component', interval=60*1000, n_intervals=0),
-    
-    # Store para paginación
-    dcc.Store(id='opp-page', data=0)
+    dcc.Interval(id='interval-component', interval=60*1000, n_intervals=0)
     
 ], fluid=True, style={
     'background-color': COLORS['bg_primary'], 
@@ -573,15 +556,11 @@ def update_chart(ticker, n):
 
 @app.callback(
     Output('opportunities-panel', 'children'),
-    [Input('interval-component', 'n_intervals'),
-     Input('opp-page', 'data')]
+    Input('interval-component', 'n_intervals')
 )
-def update_opportunities(n, page):
+def update_opportunities(n):
     """Actualiza panel de oportunidades"""
-    items_per_page = 6  # Mostrar 6 items (3 filas x 2 columnas)
-    start_idx = page * items_per_page
-    end_idx = start_idx + items_per_page
-    page_opps = OPPORTUNITIES[start_idx:end_idx]
+    page_opps = OPPORTUNITIES  # Mostrar todas las oportunidades
     
     cards = []
     for opp in page_opps:
@@ -666,30 +645,6 @@ def update_opportunities(n, page):
         rows.append(row)
     
     return rows
-
-@app.callback(
-    Output('opp-page', 'data'),
-    [Input('opp-prev', 'n_clicks'),
-     Input('opp-next', 'n_clicks')],
-    State('opp-page', 'data'),
-    prevent_initial_call=True
-)
-def change_page(prev_clicks, next_clicks, current_page):
-    """Cambia página de oportunidades"""
-    ctx = dash.callback_context
-    if not ctx.triggered:
-        return current_page
-    
-    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    items_per_page = 6  # Debe coincidir con update_opportunities
-    total_pages = (len(OPPORTUNITIES) + items_per_page - 1) // items_per_page
-    
-    if button_id == 'opp-next':
-        return min(current_page + 1, total_pages - 1)
-    elif button_id == 'opp-prev':
-        return max(current_page - 1, 0)
-    
-    return current_page
 
 @app.callback(
     Output('last-update', 'children'),
