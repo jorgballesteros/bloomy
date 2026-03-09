@@ -1,0 +1,126 @@
+/* BLOOMY - Binance Style CSS */
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Body background */
+body {
+    background-color: #0B0E11 !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+/* Card hover effects */
+.position-card:hover,
+.opportunity-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(81, 196, 200, 0.15);
+    border-color: #51C4C8 !important;
+}
+
+/* Tab hover effects */
+.tab:hover {
+    background-color: #2B3139 !important;
+}
+
+/* Button hover effects */
+button:hover {
+    background-color: #2B3139 !important;
+    transform: scale(1.05);
+}
+
+/* Smooth transitions */
+* {
+    transition: all 0.2s ease;
+}
+
+/* Custom scrollbar (Binance style) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0B0E11;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2B3139;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #51C4C8;
+}
+
+/* Remove Dash default styles */
+._dash-loading {
+    display: none;
+}
+
+/* Tooltip style */
+.dash-tooltip {
+    background-color: #1E2329 !important;
+    border: 1px solid #2B3139 !important;
+    color: #EAECEF !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-size: 11px !important;
+    border-radius: 4px !important;
+}
+
+/* Link animations */
+a {
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #51C4C8 !important;
+}
+
+/* Glow effect for accent elements */
+@keyframes glow {
+    0%, 100% {
+        text-shadow: 0 0 5px rgba(81, 196, 200, 0.5);
+    }
+    50% {
+        text-shadow: 0 0 10px rgba(81, 196, 200, 0.8);
+    }
+}
+
+/* Pulse animation for updates */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Number ticker animation */
+@keyframes ticker {
+    0% {
+        transform: translateY(-5px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Loading spinner Custom style */
+.loading-spinner {
+    border: 3px solid #2B3139;
+    border-top: 3px solid #51C4C8;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

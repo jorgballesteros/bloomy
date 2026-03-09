@@ -1,0 +1,36 @@
+{
+  "last_update": "2026-03-06 09:07",
+  "NBIS": {
+    "price": "$95-98",
+    "recommendation": "MANTENER con sesgo ACUMULAR en debilidad ($85-90)",
+    "key_points": [
+      "Rally +12.27% el 4 marzo (action-oriented AI)",
+      "Consensus: Buy (8 analistas)",
+      "Price Target: $143-155 (upside 46-59%)",
+      "Monitorear consolidación, cash listo para $85-90"
+    ],
+    "alert_levels": "<$85 (oportunidad) | >$100 (nuevo rally)"
+  },
+  "NVDA": {
+    "price": "$183.04",
+    "recommendation": "MANTENER firmemente (ganancia +50% no realizada)",
+    "key_points": [
+      "Forecast Q4 fiscal 2026: $65B revenue",
+      "BofA: Sector semis $1 trillion en 2026 (+30% YoY)",
+      "Posible stock split en discusión",
+      "Soporte/Resistencia: $175-180 / $190-195"
+    ],
+    "alert_levels": "<$175 (revisar) | >$190 (nuevo high)"
+  },
+  "OKLO": {
+    "price": "N/A",
+    "recommendation": "MANTENER largo plazo (especulativa, ejecutar 2-3 años)",
+    "key_points": [
+      "Deal Meta: Campus 1.2 GW Pike County + prepago fuel",
+      "Trump en Davos: Nuclear solución segura/eficiente",
+      "Upgrade a Buy post-Meta deal",
+      "Ventaja: Fuel recycling tech (waste → fuel)"
+    ],
+    "alert_levels": "Monitorear noticias proyecto Meta"
+  }
+}
