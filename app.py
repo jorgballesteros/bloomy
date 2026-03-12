@@ -51,7 +51,7 @@ COLORS = {
     'border': '#2B3139',
     'text_primary': '#EAECEF',
     'text_secondary': '#848E9C',
-    'gold': '#51C4C8',  # Cyan
+    'primary': '#00D4FF',  # Neon blue
     'green': '#0ECB81',
     'red': '#F6465D',
     'green_glow': 'rgba(14, 203, 129, 0.1)',
@@ -74,7 +74,7 @@ CARD_STYLE = {
 }
 
 HEADER_STYLE = {
-    'color': COLORS['gold'],
+    'color': COLORS['primary'],
     'font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     'font-size': '28px',
     'margin': '15px 0 5px 0',
@@ -208,20 +208,20 @@ app.layout = dbc.Container([
         # Panel izquierdo: Posiciones
         dbc.Col([
             html.Div([
-                html.Span("POSITIONS", style={'color': COLORS['gold'], 'font-size': '12px', 'font-weight': '600', 'font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', 'letter-spacing': '0.5px'})
+                html.Span("POSITIONS", style={'color': COLORS['primary'], 'font-size': '12px', 'font-weight': '600', 'font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', 'letter-spacing': '0.5px'})
             ], style={'margin-bottom': '12px'}),
             html.Div(id='positions-panel'),
             
             # Gráfico comparativo de posiciones
             html.Div([
                 html.Div([
-                    html.Span("PERFORMANCE", style={'color': COLORS['gold'], 'font-size': '11px', 'font-weight': '600', 'letter-spacing': '0.5px'})
+                    html.Span("PERFORMANCE", style={'color': COLORS['primary'], 'font-size': '11px', 'font-weight': '600', 'letter-spacing': '0.5px'})
                 ], style={'margin-bottom': '8px'}),
                 
                 # Botones de período
                 dbc.ButtonGroup([
                     dbc.Button("1M", id='period-1m', size='sm', style={'background-color': COLORS['bg_card'], 'color': COLORS['text_primary'], 'border': f"1px solid {COLORS['border']}", 'font-size': '9px', 'padding': '4px 8px'}),
-                    dbc.Button("3M", id='period-3m', size='sm', style={'background-color': COLORS['bg_secondary'], 'color': COLORS['gold'], 'border': f"1px solid {COLORS['gold']}", 'font-size': '9px', 'padding': '4px 8px'}),
+                    dbc.Button("3M", id='period-3m', size='sm', style={'background-color': COLORS['bg_secondary'], 'color': COLORS['primary'], 'border': f"1px solid {COLORS['primary']}", 'font-size': '9px', 'padding': '4px 8px'}),
                     dbc.Button("6M", id='period-6m', size='sm', style={'background-color': COLORS['bg_card'], 'color': COLORS['text_primary'], 'border': f"1px solid {COLORS['border']}", 'font-size': '9px', 'padding': '4px 8px'}),
                     dbc.Button("YTD", id='period-ytd', size='sm', style={'background-color': COLORS['bg_card'], 'color': COLORS['text_primary'], 'border': f"1px solid {COLORS['border']}", 'font-size': '9px', 'padding': '4px 8px'}),
                     dbc.Button("1Y", id='period-1y', size='sm', style={'background-color': COLORS['bg_card'], 'color': COLORS['text_primary'], 'border': f"1px solid {COLORS['border']}", 'font-size': '9px', 'padding': '4px 8px'}),
@@ -246,11 +246,11 @@ app.layout = dbc.Container([
                     }, 
                     selected_style={
                         'background-color': COLORS['bg_secondary'], 
-                        'color': COLORS['gold'], 
+                        'color': COLORS['primary'], 
                         'font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', 
                         'font-size': '12px', 
                         'font-weight': '600',
-                        'border-bottom': f"2px solid {COLORS['gold']}"
+                        'border-bottom': f"2px solid {COLORS['primary']}"
                     }),
                 dcc.Tab(label='NVDA', value='NVDA', 
                     style={
@@ -264,11 +264,11 @@ app.layout = dbc.Container([
                     }, 
                     selected_style={
                         'background-color': COLORS['bg_secondary'], 
-                        'color': COLORS['gold'], 
+                        'color': COLORS['primary'], 
                         'font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', 
                         'font-size': '12px', 
                         'font-weight': '600',
-                        'border-bottom': f"2px solid {COLORS['gold']}"
+                        'border-bottom': f"2px solid {COLORS['primary']}"
                     }),
                 dcc.Tab(label='OKLO', value='OKLO', 
                     style={
@@ -282,11 +282,11 @@ app.layout = dbc.Container([
                     }, 
                     selected_style={
                         'background-color': COLORS['bg_secondary'], 
-                        'color': COLORS['gold'], 
+                        'color': COLORS['primary'], 
                         'font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', 
                         'font-size': '12px', 
                         'font-weight': '600',
-                        'border-bottom': f"2px solid {COLORS['gold']}"
+                        'border-bottom': f"2px solid {COLORS['primary']}"
                     })
             ], style={'border-radius': '8px 8px 0 0'}),
             html.Div(id='chart-content', style={'margin-top': '10px', 'background-color': COLORS['bg_card'], 'border-radius': '8px', 'padding': '10px'})
@@ -295,7 +295,7 @@ app.layout = dbc.Container([
         # Panel derecho: Oportunidades
         dbc.Col([
             html.Div([
-                html.Span("WATCHLIST", style={'color': COLORS['gold'], 'font-size': '12px', 'font-weight': '600', 'font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', 'letter-spacing': '0.5px'})
+                html.Span("WATCHLIST", style={'color': COLORS['primary'], 'font-size': '12px', 'font-weight': '600', 'font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', 'letter-spacing': '0.5px'})
             ], style={'margin-bottom': '12px'}),
             html.Div(id='opportunities-panel', style={'max-height': '800px', 'overflow-y': 'auto'})
         ], width=3, style={'padding-left': '10px'})
@@ -419,7 +419,7 @@ def update_chart(ticker, n):
     
     candlestick.add_trace(go.Scatter(
         x=df.index, y=sma20, mode='lines', 
-        line=dict(color=COLORS['gold'], width=1.5, dash='dot'),
+        line=dict(color=COLORS['primary'], width=1.5, dash='dot'),
         name='SMA 20'
     ))
     
@@ -453,7 +453,7 @@ def update_chart(ticker, n):
     
     rsi_fig.add_trace(go.Scatter(
         x=df.index, y=rsi_values, mode='lines', 
-        line=dict(color=COLORS['gold'], width=2),
+        line=dict(color=COLORS['primary'], width=2),
         fill='tozeroy',
         fillcolor='rgba(240, 185, 11, 0.1)',
         name='RSI'
@@ -507,7 +507,7 @@ def update_chart(ticker, n):
         analysis_panel = html.Div([
             html.Div([
                 html.Span("ÚLTIMO ANÁLISIS", style={
-                    'color': COLORS['gold'], 
+                    'color': COLORS['primary'], 
                     'font-size': '11px', 
                     'font-weight': '600',
                     'letter-spacing': '0.5px'
@@ -555,7 +555,7 @@ def update_chart(ticker, n):
                     'font-size': '10px'
                 }),
                 html.Span(analysis.get('alert_levels', 'N/A'), style={
-                    'color': COLORS['gold'],
+                    'color': COLORS['primary'],
                     'font-size': '10px',
                     'font-weight': '600'
                 })
@@ -627,7 +627,7 @@ def update_opportunities(n):
                     html.Div(f"${current_price:.2f}", style={'font-size': '13px', 'color': COLORS['text_primary'], 'margin': '2px 0', 'font-weight': '600'}),
                     html.Div([
                         html.Span("RSI ", style={'color': COLORS['text_secondary'], 'font-size': '8px'}),
-                        html.Span(f"{rsi:.0f}" if rsi else "N/A", style={'color': COLORS['gold'], 'font-size': '8px', 'font-weight': '600'}),
+                        html.Span(f"{rsi:.0f}" if rsi else "N/A", style={'color': COLORS['primary'], 'font-size': '8px', 'font-weight': '600'}),
                         html.Span(" • ", style={'color': COLORS['text_secondary'], 'font-size': '8px', 'margin': '0 2px'}),
                         html.Span(trend, style={'color': COLORS['text_primary'], 'font-size': '8px'})
                     ], style={'margin': '4px 0 0 0'})
@@ -716,8 +716,8 @@ def update_period(m1, m3, m6, ytd, y1):
     
     active_style = {
         'background-color': COLORS['bg_secondary'],
-        'color': COLORS['gold'],
-        'border': f"1px solid {COLORS['gold']}",
+        'color': COLORS['primary'],
+        'border': f"1px solid {COLORS['primary']}",
         'font-size': '9px',
         'padding': '4px 8px'
     }
@@ -749,7 +749,7 @@ def update_performance_chart(n, period):
     fig = go.Figure()
     
     colors_map = {
-        'NBIS': COLORS['gold'],
+        'NBIS': '#FFD700',  # Yellow
         'NVDA': '#00D9FF',
         'OKLO': '#FF6B9D'
     }

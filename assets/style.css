@@ -16,7 +16,7 @@ body {
 .opportunity-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(81, 196, 200, 0.15);
-    border-color: #51C4C8 !important;
+    border-color: #00D4FF !important;
 }
 
 /* Tab hover effects */
@@ -36,7 +36,7 @@ button:hover {
 }
 
 .btn-group button:hover {
-    border-color: #51C4C8 !important;
+    border-color: #00D4FF !important;
 }
 
 /* Smooth transitions */
